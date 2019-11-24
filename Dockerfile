@@ -9,7 +9,7 @@ RUN wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | apt-key add -
 RUN echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.2.list
 RUN mkdir -p /data/db
 RUN apt-get update && apt-get install -y mongodb-org
-CMD mongod
+RUN service mongod start
 
 # Start app
 EXPOSE 5000
