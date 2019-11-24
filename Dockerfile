@@ -13,6 +13,7 @@ RUN echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-
 RUN mkdir -p /data/db
 RUN apt-get update && apt-get install -y mongodb-org
 RUN mongod --fork --logpath /var/log/mongodb.log
+RUN cat /var/log/mongodb.log
 
 # Start app
 EXPOSE 5000
