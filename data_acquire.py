@@ -1,7 +1,6 @@
 """
 Bonneville Power Administration, United States Department of Energy
 """
-import sys
 import time
 import sched
 import pandas
