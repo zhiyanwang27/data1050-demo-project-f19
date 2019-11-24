@@ -7,3 +7,4 @@
 !assets
 !assets/*.png
 !assets/*.css
+!.gitpod.yml
