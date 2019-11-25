@@ -35,6 +35,8 @@ def fetch_all_bpa():
 
 def fetch_all_bpa_as_df():
     data = fetch_all_bpa()
+    if len(data) == 0:
+        return None
     df = pds.DataFrame.from_records(data)
     df.drop('_id', axis=1, inplace=True)
     return df
