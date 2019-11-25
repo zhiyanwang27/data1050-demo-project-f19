@@ -3,6 +3,7 @@
 !.gitignore
 !*.py
 !*.txt
+!*.sh
 !Dockerfile
 !assets
 !assets/*.png
