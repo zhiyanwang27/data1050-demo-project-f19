@@ -14,7 +14,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 def static_stacked_trend_graph(stack=False):
     df = fetch_all_bpa_as_df()
     if df is None:
-        return None
+        return go.Figure()
     sources = ['Wind', 'Hydro', 'Fossil/Biomass', 'Nuclear']
     x = df['Datetime']
     fig = go.Figure()
@@ -148,7 +148,7 @@ def what_if_handler(wind, hydro):
     if _what_if_data_cache is None:
         _what_if_data_cache = fetch_all_bpa_as_df()
         if _what_if_data_cache is None:
-            return None
+            return go.Figure()
 
     df = _what_if_data_cache.copy()
     x = df['Datetime']
@@ -168,6 +168,5 @@ def what_if_handler(wind, hydro):
     return fig
 
 
-
 if __name__ == '__main__':
-    app.run_server(debug=True, port=5000)
+    app.run_server(debug=True, port=5000, host='0.0.0.0')
