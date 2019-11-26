@@ -5,3 +5,5 @@ pandas
 plotly
 pymongo
 requests
+ipywidgets
+notebook

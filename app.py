@@ -109,6 +109,29 @@ def what_if_tool():
             ], style={'marginTop': '3rem'}),
             html.Div(id='hydro-scale-text', style={'marginTop': '1rem'}),
         ], className='three columns', style={'marginLeft': 5, 'marginTop': '10%'}),
+    ], className='row eleven columns', style={'paddingLeft': '5%'})
+
+
+def app_summary():
+    return html.Div(children=[
+        dcc.Markdown('''
+        # Project Architecture
+        This project uses MongoDB as the database. All data acquired are stored in raw form to the
+        database (with de-duplication). An abstract layer is built in `database.py` so all queries
+        can be done via function call. For a more complicated app, the layer will also be
+        responsible for schema consistency. An `plot.ly` & `dash` app is serving this web page
+        through. Actions on responsive components on the page is redirected to `app.py` which will
+        then update certain components on the page.  
+        ''', className='row eleven columns', style={'paddingLeft': '5%'}),
+
+        html.Div(children=[
+            html.Img(src="https://docs.google.com/drawings/d/e/2PACX-1vQNerIIsLZU2zMdRhIl3ZZkDMIt7jhE_fjZ6ZxhnJ9bKe1emPcjI92lT5L7aZRYVhJgPZ7EURN0AqRh/pub?w=670&amp;h=457",
+                     className='row'),
+        ], className='row', style={'textAlign': 'center'}),
+
+        dcc.Markdown('''
+        
+        ''')
     ], className='row')
 
 
@@ -120,6 +143,7 @@ app.layout = html.Div([
     dcc.Graph(id='stacked-trend-graph', figure=static_stacked_trend_graph(stack=True)),
     what_if_description(),
     what_if_tool(),
+    app_summary(),
 ], className='row', id='content')
 
 
