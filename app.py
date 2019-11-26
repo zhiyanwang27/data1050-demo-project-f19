@@ -132,7 +132,7 @@ def what_if_tool():
             ], style={'marginTop': '3rem'}),
             html.Div(id='hydro-scale-text', style={'marginTop': '1rem'}),
         ], className='three columns', style={'marginLeft': 5, 'marginTop': '10%'}),
-    ], className='row eleven columns', style={'paddingLeft': '5%'})
+    ], className='row eleven columns')
 
 
 def architecture_summary():
@@ -145,7 +145,7 @@ def architecture_summary():
             This project uses MongoDB as the database. All data acquired are stored in raw form to the
             database (with de-duplication). An abstract layer is built in `database.py` so all queries
             can be done via function call. For a more complicated app, the layer will also be
-            responsible for schema consistency. An `plot.ly` & `dash` app is serving this web page
+            responsible for schema consistency. A `plot.ly` & `dash` app is serving this web page
             through. Actions on responsive components on the page is redirected to `app.py` which will
             then update certain components on the page.  
         ''', className='row eleven columns', style={'paddingLeft': '5%'}),
