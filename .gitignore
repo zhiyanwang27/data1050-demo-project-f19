@@ -13,3 +13,5 @@
 !assets/*.css
 !.jupyter
 !.jupyter/*.py
+!doc/
+!doc/*.png
