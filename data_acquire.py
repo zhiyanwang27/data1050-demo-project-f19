@@ -30,7 +30,7 @@ def download_bpa(url=BPA_SOURCE, retries=MAX_DOWNLOAD_ATTEMPT):
             req.raise_for_status()
             text = req.text
         except requests.exceptions.HTTPError as e:
-            logger.warning(f"Retry on HTTP Error: {e}")
+            logger.warning("Retry on HTTP Error: {}".format(e))
     if text is None:
         logger.error('download_bpa too many FAILED attempts')
     return text
@@ -61,7 +61,7 @@ def main_loop(timeout=DOWNLOAD_PERIOD):
         try:
             update_once()
         except Exception as e:
-            logger.warning(f"main loop worker ignores exception and continues: {e}")
+            logger.warning("main loop worker ignores exception and continues: {}".format(e))
         scheduler.enter(timeout, 1, _worker)    # schedule the next event
 
     scheduler.enter(0, 1, _worker)              # start the first event

@@ -25,8 +25,8 @@ def upsert_bpa(df):
             upsert=True)                                # update if exists, insert if not
         if result.matched_count > 0:
             update_count += 1
-    logger.info(f"rows={df.shape[0]}, update={update_count}, "
-                f"insert={df.shape[0]-update_count}")
+    logger.info("rows={}, update={}, ".format(df.shape[0], update_count) +
+                "insert={}".format(df.shape[0]-update_count))
 
 
 def fetch_all_bpa():

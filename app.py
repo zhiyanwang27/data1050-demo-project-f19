@@ -183,7 +183,7 @@ app.layout = html.Div([
     [dash.dependencies.Input('wind-scale-slider', 'value')])
 def update_wind_sacle_text(value):
     """Changes the display text of the wind slider"""
-    return f"Wind Power Scale {value:.2f}x"
+    return "Wind Power Scale {:.2f}x".format(value)
 
 
 @app.callback(
@@ -191,7 +191,7 @@ def update_wind_sacle_text(value):
     [dash.dependencies.Input('hydro-scale-slider', 'value')])
 def update_hydro_sacle_text(value):
     """Changes the display text of the hydro slider"""
-    return f"Hydro Power Scale {value:.2f}x"
+    return "Hydro Power Scale {:.2f}x".format(value)
 
 
 _what_if_data_cache = None
@@ -220,4 +220,4 @@ def what_if_handler(wind, hydro):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8080, host='0.0.0.0')
+    app.run_server(debug=True, port=1050, host='0.0.0.0')
