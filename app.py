@@ -70,8 +70,9 @@ def description():
         
         ### Data Source
         Energy Planner utilizes near-real-time energy production & consumption data from [BPA 
-        Balancing Authority](https://transmission.bpa.gov/business/operations/Wind/baltwg.aspx).
-        The data source **updates every 5 minutes**. 
+        Balancing Authority](https://www.bpa.gov/news/AboutUs/Pages/default.aspx).
+        The [data source](https://transmission.bpa.gov/business/operations/Wind/baltwg.aspx) 
+        **updates every 5 minutes**. 
         ''', className='eleven columns', style={'paddingLeft': '5%'})
     ], className="row")
 

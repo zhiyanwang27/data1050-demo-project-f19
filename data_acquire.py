@@ -48,14 +48,18 @@ def filter_bpa(text):
     return df
 
 
+def update_once():
+    t = download_bpa()
+    df = filter_bpa(t)
+    upsert_bpa(df)
+
+
 def main_loop(timeout=DOWNLOAD_PERIOD):
     scheduler = sched.scheduler(time.time, time.sleep)
 
     def _worker():
         try:
-            t = download_bpa()
-            df = filter_bpa(t)
-            upsert_bpa(df)
+            update_once()
         except Exception as e:
             logger.warning(f"main loop worker ignores exception and continues: {e}")
         scheduler.enter(timeout, 1, _worker)    # schedule the next event
@@ -66,10 +70,5 @@ def main_loop(timeout=DOWNLOAD_PERIOD):
 
 if __name__ == '__main__':
     main_loop()
-
-
-
-
-
 
 
