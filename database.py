@@ -32,7 +32,9 @@ def upsert_bpa(df):
 def fetch_all_bpa():
     db = client.get_database("energy")
     collection = db.get_collection("energy")
-    return list(collection.find())
+    ret = list(collection.find())
+    logger.info(str(len(ret)) + ' documents read from the db')
+    return ret
 
 
 _fetch_all_bpa_as_df_cache = expiringdict.ExpiringDict(max_len=1,

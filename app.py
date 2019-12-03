@@ -162,18 +162,21 @@ def architecture_summary():
 
 
 # Sequentially add page components to the app's layout
+def dynamic_layout():
+    return html.Div([
+        page_header(),
+        html.Hr(),
+        description(),
+        # dcc.Graph(id='trend-graph', figure=static_stacked_trend_graph(stack=False)),
+        dcc.Graph(id='stacked-trend-graph', figure=static_stacked_trend_graph(stack=True)),
+        what_if_description(),
+        what_if_tool(),
+        architecture_summary(),
+    ], className='row', id='content')
 
 
-app.layout = html.Div([
-    page_header(),
-    html.Hr(),
-    description(),
-    # dcc.Graph(id='trend-graph', figure=static_stacked_trend_graph(stack=False)),
-    dcc.Graph(id='stacked-trend-graph', figure=static_stacked_trend_graph(stack=True)),
-    what_if_description(),
-    what_if_tool(),
-    architecture_summary(),
-], className='row', id='content')
+# set layout to a function which updates upon reloading
+app.layout = dynamic_layout
 
 
 # Defines the dependencies of interactive components
@@ -193,8 +196,6 @@ def update_hydro_sacle_text(value):
     """Changes the display text of the hydro slider"""
     return "Hydro Power Scale {:.2f}x".format(value)
 
-
-_what_if_data_cache = None
 
 
 @app.callback(
