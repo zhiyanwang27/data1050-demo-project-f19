@@ -69,20 +69,20 @@ def static_stacked_trend_graph(stack=False):
     """
     df = fetch_all_bpa_as_df()
     if df is None:
-        return go.Figure()
-    sources = ['Wind', 'Hydro', 'Fossil/Biomass', 'Nuclear']
-    x = df['Datetime']
-    fig = go.Figure()
-    for i, s in enumerate(sources):
+        return go.Figure() #empty figure initialized if no data in df
+    sources = ['Wind', 'Hydro', 'Fossil/Biomass', 'Nuclear'] #genres
+    x = df['Datetime'] #we have a simliar one in our dataframe -- rename this as Datetime
+    fig = go.Figure() #initializes the figure 
+    for i, s in enumerate(sources): #trace for every genre
         fig.add_trace(go.Scatter(x=x, y=df[s], mode='lines', name=s,
-                                 line={'width': 2, 'color': COLORS[i]},
+                                 line={'width': 2, 'color': COLORS[i]}, #counter to do different colors
                                  stackgroup='stack' if stack else None))
-    fig.add_trace(go.Scatter(x=x, y=df['Load'], mode='lines', name='Load',
-                             line={'width': 2, 'color': 'orange'}))
+    fig.add_trace(go.Scatter(x=x, y=df['Load'], mode='lines', name='Load', #we don't need the extra trace
+                             line={'width': 2, 'color': 'orange'})) 
     title = 'Energy Production & Consumption under BPA Balancing Authority'
     if stack:
-        title += ' [Stacked]'
-    fig.update_layout(template='plotly_dark',
+        title += ' [Stacked]' #append a string title to if stack is applied (we can keep this for ours too, stack the genres)
+    fig.update_layout(template='plotly_dark', #figure layout
                       title=title,
                       plot_bgcolor='#23272c',
                       paper_bgcolor='#23272c',
@@ -91,7 +91,7 @@ def static_stacked_trend_graph(stack=False):
     return fig
 
 
-def what_if_description():
+def what_if_description(): #text descriptions
     """
     Returns description of "What-If" - the interactive component
     """
