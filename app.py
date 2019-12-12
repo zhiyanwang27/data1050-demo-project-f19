@@ -74,11 +74,11 @@ def static_stacked_trend_graph(stack=False):
         return go.Figure() #empty figure initialized if no data in df
     genres = df.genre.unique()
     genres = genres[:5]
-    x = df['date']
+    #x = df['date']
     fig = go.Figure()
     for i, s in enumerate(genres):
         df_by_genre = df[df['genre'] == s]
-        fig.add_trace(go.Scatter(x=x, y=df_by_genre['Streams'], mode='lines', name=s,
+        fig.add_trace(go.Scatter(x=df_by_genre['date'], y=df_by_genre['Streams'], mode='markers', name=s,
                                  line={'width': 2},
                                  stackgroup='stack' if stack else None))
    # fig.add_trace(go.Scatter(x=x, y=df['Load'], mode='lines', name='Load',
@@ -139,7 +139,7 @@ def what_if_tool():
     demand-supply plot and rescale sliders.
     """
     return html.Div(children=[
-        html.Div(children=[dcc.Graph(id='what-if-figure')], className='nine columns'),
+        html.Div(children=[dcc.Graph(id='what-if-figure')], className='nine columns', style={'marginTop': '10rem'}),
 
         html.Div(children=[
             html.H5("Rescale Power Supply", style={'marginTop': '2rem'}),
@@ -148,7 +148,8 @@ def what_if_tool():
             id="wind-scale-slider".format("wind-scale-slider"),
             type='text',
             placeholder="input date".format('wind-scale-slider')
-            )])]),
+            )], style={'marginTop': '3rem'}
+            )]),
 
         html.Div(id='wind-scale-text', style={'marginTop': '1rem'})
             
