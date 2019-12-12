@@ -73,6 +73,7 @@ def static_stacked_trend_graph(stack=False):
     if df is None:
         return go.Figure() #empty figure initialized if no data in df
     genres = df.genre.unique()
+    genres = genres[:5]
     x = df['date']
     fig = go.Figure()
     for i, s in enumerate(genres):
@@ -142,20 +143,31 @@ def what_if_tool():
 
         html.Div(children=[
             html.H5("Rescale Power Supply", style={'marginTop': '2rem'}),
-            html.Div(children=[
-                dcc.Slider(id='wind-scale-slider', min=0, max=4, step=0.1, value=2.5, className='row',
-                           marks={x: str(x) for x in np.arange(0, 4.1, 1)})
-            ], style={'marginTop': '5rem'}),
+            html.Div(children = [
+                dcc.Input(
+            id="wind-scale-slider".format("wind-scale-slider"),
+            type='text',
+            placeholder="input date".format('wind-scale-slider')
+            )])]),
 
-            html.Div(id='wind-scale-text', style={'marginTop': '1rem'}),
+        html.Div(id='wind-scale-text', style={'marginTop': '1rem'})
+            
+            ])
 
-            html.Div(children=[
-                dcc.Slider(id='hydro-scale-slider', min=0, max=4, step=0.1, value=0,
-                           className='row', marks={x: str(x) for x in np.arange(0, 4.1, 1)})
-            ], style={'marginTop': '3rem'}),
-            html.Div(id='hydro-scale-text', style={'marginTop': '1rem'}),
-        ], className='three columns', style={'marginLeft': 5, 'marginTop': '10%'}),
-    ], className='row eleven columns')
+            # html.Div(children=[
+            #     dcc.Slider(id='wind-scale-slider', min=0, max=4, step=0.1, value=2.5, className='row',
+            #                marks={x: str(x) for x in np.arange(0, 4.1, 1)})
+            # ], style={'marginTop': '5rem'}),
+
+    #         html.Div(id='wind-scale-text', style={'marginTop': '1rem'}),
+
+    #         html.Div(children=[
+    #             dcc.Slider(id='hydro-scale-slider', min=0, max=4, step=0.1, value=0,
+    #                        className='row', marks={x: str(x) for x in np.arange(0, 4.1, 1)})
+    #         ], style={'marginTop': '3rem'}),
+    #         html.Div(id='hydro-scale-text', style={'marginTop': '1rem'}),
+    #     ], className='three columns', style={'marginLeft': 5, 'marginTop': '10%'}),
+    # ], className='row eleven columns')
 
 
 def architecture_summary():
@@ -207,39 +219,69 @@ app.layout = dynamic_layout
 @app.callback(
     dash.dependencies.Output('wind-scale-text', 'children'),
     [dash.dependencies.Input('wind-scale-slider', 'value')])
+    
 def update_wind_sacle_text(value):
-    """Changes the display text of the wind slider"""
-    return "Wind Power Scale {:.2f}x".format(value)
+   """Changes the display text of the wind slider"""
+   return "Date shown: ({})".format(value)
+
+
+#@app.callback(
+#    dash.dependencies.Output('hydro-scale-text', 'children'),
+#    [dash.dependencies.Input('hydro-scale-slider', 'value')])
+
+#def update_hydro_sacle_text(value):
+#    """Changes the display text of the hydro slider"""
+#    return "Hydro Power Scale {:.2f}x".format(value)
 
 
 @app.callback(
-    dash.dependencies.Output('hydro-scale-text', 'children'),
-    [dash.dependencies.Input('hydro-scale-slider', 'value')])
-def update_hydro_sacle_text(value):
-    """Changes the display text of the hydro slider"""
-    return "Hydro Power Scale {:.2f}x".format(value)
+   dash.dependencies.Output('what-if-figure', 'figure'),
+   [dash.dependencies.Input('wind-scale-slider', 'value')])
+    #dash.dependencies.Input('hydro-scale-slider', 'value')
 
+# #@app.callback(
+#     Output('graph-with-slider', 'figure'),
+#     [Input('year-slider', 'value')])
+    
+def what_if_handler(selected_year):
+    df = fetch_all_spotify_as_df(allow_cached=True)
+    x=df['date']
 
+    filtered_df = df[df.date == selected_year]
+    traces = []
+    for i in filtered_df.genre.unique():
+        df_by_genre = filtered_df[filtered_df['genre'] == i]
+        traces.append(dict(
+            x=df_by_genre['genre'],
+            y=df_by_genre['Streams'],
+            type = 'box',
+            opacity=0.7,
+            name=i
+        ))
 
-@app.callback(
-    dash.dependencies.Output('what-if-figure', 'figure'),
-    [dash.dependencies.Input('wind-scale-slider', 'value'),
-     dash.dependencies.Input('hydro-scale-slider', 'value')])
-def what_if_handler(wind, hydro):
-    """Changes the display graph of supply-demand"""
-    df = fetch_all_bpa_as_df(allow_cached=True)
-    x = df['Datetime']
-    supply = df['Wind'] * wind + df['Hydro'] * hydro + df['Fossil/Biomass'] + df['Nuclear']
-    load = df['Load']
+    return {
+        'data': traces,
+        'layout': dict(
+            xaxis={'title': 'genre',
+                   'range':[0,50]},
+            yaxis={'title': 'Streams', 'range': [0, 500000]},
+            margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
+            showlegend = False,
+            hovermode='closest',
+            transition = {'duration': 500},
+        )
+    }
+    # supply = df['Wind'] * wind + df['Hydro'] * hydro + df['Fossil/Biomass'] + df['Nuclear']
+    # load = df['Load']
 
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=x, y=supply, mode='none', name='supply', line={'width': 2, 'color': 'pink'},
-                  fill='tozeroy'))
-    fig.add_trace(go.Scatter(x=x, y=load, mode='none', name='demand', line={'width': 2, 'color': 'orange'},
-                  fill='tonexty'))
-    fig.update_layout(template='plotly_dark', title='Supply/Demand after Power Scaling',
-                      plot_bgcolor='#23272c', paper_bgcolor='#23272c', yaxis_title='MW',
-                      xaxis_title='Date/Time')
+    # fig = go.Figure()
+    # fig.add_trace(go.Scatter(x=x, y=supply, mode='none', name='supply', line={'width': 2, 'color': 'pink'},
+    #               fill='tozeroy'))
+    # fig.add_trace(go.Scatter(x=x, y=load, mode='none', name='demand', line={'width': 2, 'color': 'orange'},
+    #               fill='tonexty'))
+    # fig.update_layout(template='plotly_dark', title='Supply/Demand after Power Scaling',
+    #                   plot_bgcolor='#23272c', paper_bgcolor='#23272c', yaxis_title='MW',
+    #                   xaxis_title='Date/Time')
     return fig
 
 
