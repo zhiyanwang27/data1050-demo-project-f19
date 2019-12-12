@@ -68,28 +68,50 @@ def static_stacked_trend_graph(stack=False):
     If `stack` is `True`, the 4 power sources are stacked together to show the overall power
     production.
     """
-    df = fetch_all_bpa_as_df()
+    #df = fetch_all_bpa_as_df()
+    df = fetch_all_spotify_as_df()
     if df is None:
         return go.Figure() #empty figure initialized if no data in df
-    sources = ['Wind', 'Hydro', 'Fossil/Biomass', 'Nuclear'] #genres
-    x = df['Datetime'] #we have a simliar one in our dataframe -- rename this as Datetime
-    fig = go.Figure() #initializes the figure 
-    for i, s in enumerate(sources): #trace for every genre
-        fig.add_trace(go.Scatter(x=x, y=df[s], mode='lines', name=s,
-                                 line={'width': 2, 'color': COLORS[i]}, #counter to do different colors
+    genres = df.genre.unique()
+    x = df['date']
+    fig = go.Figure()
+    for i, s in enumerate(genres):
+        df_by_genre = df[df['genre'] == s]
+        fig.add_trace(go.Scatter(x=x, y=df_by_genre['Streams'], mode='lines', name=s,
+                                 line={'width': 2},
                                  stackgroup='stack' if stack else None))
-    fig.add_trace(go.Scatter(x=x, y=df['Load'], mode='lines', name='Load', #we don't need the extra trace
-                             line={'width': 2, 'color': 'orange'})) 
-    title = 'Energy Production & Consumption under BPA Balancing Authority'
+   # fig.add_trace(go.Scatter(x=x, y=df['Load'], mode='lines', name='Load',
+                           #  line={'width': 2, 'color': 'orange'}))
+    title = 'Stream by genre across the week'
     if stack:
-        title += ' [Stacked]' #append a string title to if stack is applied (we can keep this for ours too, stack the genres)
-    fig.update_layout(template='plotly_dark', #figure layout
+        title += ' [Stacked]'
+
+    fig.update_layout(template='plotly_dark',
                       title=title,
                       plot_bgcolor='#23272c',
                       paper_bgcolor='#23272c',
                       yaxis_title='MW',
-                      xaxis_title='Date/Time')
+                      xaxis_title='Date')
     return fig
+    # sources = ['Wind', 'Hydro', 'Fossil/Biomass', 'Nuclear'] #genres
+    # x = df['Datetime'] #we have a simliar one in our dataframe -- rename this as Datetime
+    # fig = go.Figure() #initializes the figure 
+    # for i, s in enumerate(sources): #trace for every genre
+    #     fig.add_trace(go.Scatter(x=x, y=df[s], mode='lines', name=s,
+    #                              line={'width': 2, 'color': COLORS[i]}, #counter to do different colors
+    #                              stackgroup='stack' if stack else None))
+    # fig.add_trace(go.Scatter(x=x, y=df['Load'], mode='lines', name='Load', #we don't need the extra trace
+    #                          line={'width': 2, 'color': 'orange'})) 
+    # title = 'Energy Production & Consumption under BPA Balancing Authority'
+    # if stack:
+    #     title += ' [Stacked]' #append a string title to if stack is applied (we can keep this for ours too, stack the genres)
+    # fig.update_layout(template='plotly_dark', #figure layout
+    #                   title=title,
+    #                   plot_bgcolor='#23272c',
+    #                   paper_bgcolor='#23272c',
+    #                   yaxis_title='MW',
+    #                   xaxis_title='Date/Time')
+    # return fig
 
 
 def what_if_description(): #text descriptions
