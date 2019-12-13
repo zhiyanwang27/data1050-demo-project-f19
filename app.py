@@ -139,7 +139,7 @@ def what_if_tool():
     demand-supply plot and rescale sliders.
     """
     return html.Div(children=[
-        html.Div(children=[dcc.Graph(id='what-if-figure')], className='nine columns', style={'marginTop': '10rem'}),
+        html.Div(children=[dcc.Graph(id='what-if-figure')], className='nine columns', style={'marginTop': '5rem'}),
 
         html.Div(children=[
             html.H5("Rescale Power Supply", style={'marginTop': '2rem'}),
@@ -151,7 +151,7 @@ def what_if_tool():
             )], style={'marginTop': '3rem'}
             )]),
 
-        html.Div(id='wind-scale-text', style={'marginTop': '1rem'})
+        html.Div(id='wind-scale-text', style={'marginTop': '3rem'})
             
             ])
 
