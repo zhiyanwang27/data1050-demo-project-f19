@@ -27,11 +27,11 @@ def page_header():
                  className="ten columns"),
         html.A([html.Img(id='logo', src=app.get_asset_url('github.png'),
                          style={'height': '35px', 'paddingTop': '7%'}),
-                html.Span('Blownhither', style={'fontSize': '2rem', 'height': '35px', 'bottom': 0,
+                html.Span('1050 project', style={'fontSize': '2rem', 'height': '35px', 'bottom': 0,
                                                 'paddingLeft': '4px', 'color': '#a3a7b0',
                                                 'textDecoration': 'none'})],
                className="two columns row",
-               href='https://github.com/blownhither/'),
+               href='https://github.com/zhiyanwang27/data1050-demo-project-f19'),
     ], className="row")
 
 
@@ -75,7 +75,7 @@ def static_stacked_trend_graph(stack=False):
     genres = df.genre.unique()
     date = df.date.unique()
     date = np.sort(date)
-    date = date[-6:-1]
+    date = date[-6:]
     df = df[df['date'].between(date[0], date[-1], inclusive = True)]
     #genres = genres[:5]
     #x = df['date']
@@ -147,7 +147,7 @@ def what_if_tool():
     demand-supply plot and rescale sliders.
     """
     return html.Div(children=[
-        html.Div(children=[dcc.Graph(id='what-if-figure')], className='nine columns'),
+        html.Div(children=[dcc.Graph(id='what-if-figure')], className='nine columns', style={'marginTop': '5rem'}),
 
         html.Div(children=[
             html.H5("Rescale Power Supply", style={'marginTop': '2rem'}),
@@ -156,9 +156,10 @@ def what_if_tool():
             id="wind-scale-slider".format("wind-scale-slider"),
             type='text',
             placeholder="input date".format('wind-scale-slider')
-            )])]),
+            )], style={'marginTop': '3rem'}
+            )]),
 
-        html.Div(id='wind-scale-text', style={'marginTop': '1rem'})
+        html.Div(id='wind-scale-text', className = 'three columns', style={'marginTop': '3rem'})
             
             ])
 
@@ -271,9 +272,9 @@ def what_if_handler(selected_year):
         'data': traces,
         'layout': dict(
             xaxis={'title': 'genre',
-                   'range':[0,50]},
+                   'range':[-1,50]},
             yaxis={'title': 'Streams', 'range': [0, 500000]},
-            margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
+            margin={'l': 50, 'b': 180, 't': 10, 'r': 10},
             showlegend = False,
             hovermode='closest',
             transition = {'duration': 500},
