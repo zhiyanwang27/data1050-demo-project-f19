@@ -27,11 +27,11 @@ def page_header():
                  className="ten columns"),
         html.A([html.Img(id='logo', src=app.get_asset_url('github.png'),
                          style={'height': '35px', 'paddingTop': '7%'}),
-                html.Span('Blownhither', style={'fontSize': '2rem', 'height': '35px', 'bottom': 0,
+                html.Span('1050 project', style={'fontSize': '2rem', 'height': '35px', 'bottom': 0,
                                                 'paddingLeft': '4px', 'color': '#a3a7b0',
                                                 'textDecoration': 'none'})],
                className="two columns row",
-               href='https://github.com/blownhither/'),
+               href='https://github.com/zhiyanwang27/data1050-demo-project-f19'),
     ], className="row")
 
 
@@ -151,7 +151,7 @@ def what_if_tool():
             )], style={'marginTop': '3rem'}
             )]),
 
-        html.Div(id='wind-scale-text', style={'marginTop': '3rem'})
+        html.Div(id='wind-scale-text', className = 'three columns', style={'marginTop': '3rem'})
             
             ])
 
@@ -264,9 +264,9 @@ def what_if_handler(selected_year):
         'data': traces,
         'layout': dict(
             xaxis={'title': 'genre',
-                   'range':[0,50]},
+                   'range':[-1,50]},
             yaxis={'title': 'Streams', 'range': [0, 500000]},
-            margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
+            margin={'l': 50, 'b': 180, 't': 10, 'r': 10},
             showlegend = False,
             hovermode='closest',
             transition = {'duration': 500},
