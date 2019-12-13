@@ -111,7 +111,7 @@ def fetch_all_spotify_as_df(allow_cached=False):
         except KeyError:
             pass
     ret = _work()
-    _fetch_all_bpa_as_df_cache['cache'] = ret
+    _fetch_all_spotify_as_df_cache['cache'] = ret
     return ret
 
 

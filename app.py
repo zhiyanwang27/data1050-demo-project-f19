@@ -4,11 +4,11 @@ import dash_html_components as html
 import numpy as np
 import plotly.graph_objects as go
 
-from database import fetch_all_bpa_as_df
+#from database import fetch_all_bpa_as_df
 from database import fetch_all_spotify_as_df
 
 # Definitions of constants. This projects uses extra CSS stylesheet at `./assets/style.css`
-COLORS = ['rgb(67,67,67)', 'rgb(115,115,115)', 'rgb(49,130,189)', 'rgb(189,189,189)']
+COLORS = ['rgb(67,67,67)', 'rgb(115,115,115)', 'rgb(49,130,189)', 'rgb(189,189,189)','rgb(67,115,115)']
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', '/assets/style.css']
 
 # Define the dash app first
@@ -73,14 +73,21 @@ def static_stacked_trend_graph(stack=False):
     if df is None:
         return go.Figure() #empty figure initialized if no data in df
     genres = df.genre.unique()
-    genres = genres[:5]
-    x = df['date']
+    date = df.date.unique()
+    date = np.sort(date)
+    date = date[-6:-1]
+    df = df[df['date'].between(date[0], date[-1], inclusive = True)]
+    #genres = genres[:5]
+    #x = df['date']
     fig = go.Figure()
     for i, s in enumerate(genres):
         df_by_genre = df[df['genre'] == s]
-        fig.add_trace(go.Scatter(x=x, y=df_by_genre['Streams'], mode='lines', name=s,
-                                 line={'width': 2},
-                                 stackgroup='stack' if stack else None))
+        # fig.add_trace(go.Scatter(x=df_by_genre['date'], y=df_by_genre['Streams'], mode='markers', name=s,
+        #                          connectgaps=False,
+        #                          stackgroup='stack' if stack else None))
+        fig.add_trace(go.Box(x = df_by_genre['date'], y = df_by_genre['Streams'], name = s, 
+                             marker_color = COLORS[i%5]))
+    
    # fig.add_trace(go.Scatter(x=x, y=df['Load'], mode='lines', name='Load',
                            #  line={'width': 2, 'color': 'orange'}))
     title = 'Stream by genre across the week'
@@ -91,8 +98,9 @@ def static_stacked_trend_graph(stack=False):
                       title=title,
                       plot_bgcolor='#23272c',
                       paper_bgcolor='#23272c',
-                      yaxis_title='MW',
-                      xaxis_title='Date')
+                      yaxis_title='Streams',
+                      xaxis_title='Date',
+                      boxmode='group')
     return fig
     # sources = ['Wind', 'Hydro', 'Fossil/Biomass', 'Nuclear'] #genres
     # x = df['Datetime'] #we have a simliar one in our dataframe -- rename this as Datetime
