@@ -40,7 +40,7 @@ def description():
     Returns overall project description in markdown
     """
     return html.Div(children=[dcc.Markdown('''
-        # Energy Planner
+        # Spotify Top 200 Tracks
         As of today, 138 cities in the U.S. have formally announced 100% renewable energy goals or
         targets, while others are actively considering similar goals. Despite ambition and progress,
         conversion towards renewable energy remains challenging.
@@ -55,10 +55,9 @@ def description():
         near-real-time energy production & consumption data.
 
         ### Data Source
-        Energy Planner utilizes near-real-time energy production & consumption data from [BPA 
-        Balancing Authority](https://www.bpa.gov/news/AboutUs/Pages/default.aspx).
-        The [data source](https://transmission.bpa.gov/business/operations/Wind/baltwg.aspx) 
-        **updates every 5 minutes**. 
+        Spotify Top 200 Tracks utilizes near-real-time spotify chart data from [Spotify](https://www.spotify.com/us/).
+        The [data source](https://spotifycharts.com/regional) 
+        **updates daily**. 
         ''', className='eleven columns', style={'paddingLeft': '5%'})], className="row")
 
 
