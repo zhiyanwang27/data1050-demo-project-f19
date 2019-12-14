@@ -40,19 +40,13 @@ def description():
     Returns overall project description in markdown
     """
     return html.Div(children=[dcc.Markdown('''
-        # Spotify Top 200 Tracks
-        As of today, 138 cities in the U.S. have formally announced 100% renewable energy goals or
-        targets, while others are actively considering similar goals. Despite ambition and progress,
-        conversion towards renewable energy remains challenging.
-
-        Wind and solar power are becoming more cost effective, but they will always be unreliable
-        and intermittent sources of energy. They follow weather patterns with potential for lots of
-        variability. Solar power starts to die away right at sunset, when one of the two daily peaks
-        arrives (see orange curve for load).
-
-        **Energy Planner is a "What-If" tool to assist making power conversion plans.**
-        It can be used to explore load satisfiability under different power contribution with 
-        near-real-time energy production & consumption data.
+        # The Genres of Spotify Top 200 Tracks
+        Spotify is one of the most commonly used streaming music services worldwide, 
+        with over 217 million paying subscribers. Genre, streaming, user and acoustics data are not only interesting on a user level 
+        (i.e: what are my listening habits?), but are extremely lucrative when good suggestion algorithms 
+        can satisfy user cravings for new music. Toward this, we thought it might be interesting to see what kind of genre trends exist in top streamed songs using
+        Spotify Top 200 Tracks data. This tool could uncover interesting trends with respect to what type of 
+        music users like to listen to on spotify in aggregate, rather than on a user by user basis. 
 
         ### Data Source
         Spotify Top 200 Tracks utilizes near-real-time spotify chart data from [Spotify](https://www.spotify.com/us/).
@@ -128,14 +122,11 @@ def what_if_description(): #text descriptions
     """
     return html.Div(children=[
         dcc.Markdown('''
-        # " What If "
-        So far, BPA has been relying on hydro power to balance the demand and supply of power. 
-        Could our city survive an outage of hydro power and use up-scaled wind power as an
-        alternative? Find below **what would happen with 2.5x wind power and no hydro power at 
-        all**.   
-        Feel free to try out more combinations with the sliders. For the clarity of demo code,
-        only two sliders are included here. A fully-functioning What-If tool should support
-        playing with other interesting aspects of the problem (e.g. instability of load).
+        # "What genres are on most streamed on Spotify's Top Tracks?"
+        
+        It might be interesting to investigate how the top genres change across time. Enter a date in yyyy-mm-dd style and see what types of genres
+        appear at single day resolution.
+
         ''', className='eleven columns', style={'paddingLeft': '5%'})
     ], className="row")
 
