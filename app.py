@@ -124,8 +124,8 @@ def what_if_description(): #text descriptions
         dcc.Markdown('''
         # "What genres are on most streamed on Spotify's Top Tracks?"
         
-        It might be interesting to investigate how the top genres change across time. Enter a date in yyyy-mm-dd style and see what types of genres
-        appear at single day resolution.
+        It might be interesting to zoom in on particular time points from the graph seen above. 
+        Enter one of the dates (yyyy-mm-dd) from the week shown above to check out how songs per genre distribute in the top 200 tracks for that day.
 
         ''', className='eleven columns', style={'paddingLeft': '5%'})
     ], className="row")
