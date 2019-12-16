@@ -3,6 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
 import plotly.graph_objects as go
+import flask
 
 #from database import fetch_all_bpa_as_df
 from database import fetch_all_spotify_as_df
@@ -14,6 +15,12 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css', '/assets/s
 # Define the dash app first
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
+# for multiplage
+def url_bar_and_content_div():
+    return html.Div([
+    dcc.Location(id='url', refresh=False),
+    html.Div(id='page-content')
+])
 
 # Define component functions
 
@@ -34,6 +41,24 @@ def page_header():
                href='https://github.com/zhiyanwang27/data1050-demo-project-f19'),
     ], className="row")
 
+def page_link():
+    """
+    Returns the page link as a dash html.Div
+    """
+    return html.Div(children=[
+        html.Div([dcc.Link('Go to About Page', href='/page-1'),])
+    ])
+
+def about_page_layout():
+    return html.Div([
+        html.H2('About Page'),
+        dcc.Markdown('''
+        # Test test
+        ''', className='eleven columns', style={'paddingLeft': '5%'}),
+        html.Br(),
+        html.Div(id='page-1-content'),
+        dcc.Link('Go back to Home', href='/'),
+])
 
 def description():
     """
@@ -199,6 +224,7 @@ def architecture_summary():
 def dynamic_layout():
     return html.Div([
         page_header(),
+        page_link(),
         html.Hr(),
         description(),
         # dcc.Graph(id='trend-graph', figure=static_stacked_trend_graph(stack=False)),
@@ -206,11 +232,19 @@ def dynamic_layout():
         what_if_description(),
         what_if_tool(),
         architecture_summary(),
-    ], className='row', id='content')
+    ])
 
+def serve_layout():
+    if flask.has_request_context():
+        return url_bar_and_content_div()
+    return html.Div([
+        url_bar_and_content_div(),
+        dynamic_layout(),
+        about_page_layout()
+    ])
 
 # set layout to a function which updates upon reloading
-app.layout = dynamic_layout
+app.layout = serve_layout
 
 
 # Defines the dependencies of interactive components
@@ -283,6 +317,14 @@ def what_if_handler(selected_year):
     #                   xaxis_title='Date/Time')
     return fig
 
+
+@app.callback( dash.dependencies.Output('page-content', 'children'),
+              [ dash.dependencies.Input('url', 'pathname')])
+def display_page(pathname):
+    if pathname == "/page-1":
+        return about_page_layout()
+    else:
+        return dynamic_layout()
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=1050, host='0.0.0.0')
