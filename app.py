@@ -51,7 +51,8 @@ def page_link():
 
 def about_page_layout():
     return html.Div([
-        html.H2('About Page'),
+        html.H3('About'),
+        html.Hr(),
         dcc.Markdown('''
         # Test test
         ''', className='eleven columns', style={'paddingLeft': '5%'}),
