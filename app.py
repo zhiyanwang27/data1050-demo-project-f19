@@ -54,7 +54,75 @@ def about_page_layout():
         html.H3('About'),
         html.Hr(),
         dcc.Markdown('''
-        # Test test
+        # **Spotify Top Tracks**
+         *A project by Amanda Khoo and Zhiyan Wang for Data 1050*
+
+
+        **Project Abstract & Executive Summary**  
+
+        Streaming music services are responsible for over half of the music industry’s 2018 revenue [1]. 
+        With dozens of music streaming providers, retaining paying subscribers is an important part of Spotify and other streaming services’ business model. 
+        Investigating listener trends in the top streamed tracks and aggregation of that data is one potential way to investigate what listeners (in aggregate and over time) 
+        are streaming to ensure that new tracks from those genres are available on the platform. Toward this, we have queried two spotify databases to obtain 1) the top 200 
+        tracks for a given time period and 2) the genres of the artists performing those tracks. We use merge this data in order to summarize which are the top 
+        genres at single day resolution and present an interactive user interface.
+
+
+        **Datasets**
+
+        The dataset we are using is from spotify charts. The dataset is updated daily to record the top 200 tracks played on spotify from different regions. 
+        The dataset recorded the top 200 songs from 2017 up to the current date. The dataset can be accessed via https://spotifycharts.com/regional.
+        We are using a python tool for accessing the file information called spotify-chart (https://github.com/fbkarsdorp/spotify-chart). 
+        The initial dataset will be acquired on the current date. The dataset will contain ***ranking, track information, artist, url, date, region, 
+        streams, number of followers of the artist*** and ***genre*** of the artist. Genre and follower information will be acquired through spotify API and is 
+        appended to the dataset as a separate column. 
+
+        We can update the dataset as soon as every day, though the top track on spotify may not change interestingly at that resolution. 
+        Thus, choosing an interesting time resolution will be something for us to test and implement capabilities that make sense for deployment 
+        (i.e: changes across per month, or per week). 
+
+
+        **Summary of performance**
+
+        Our website is functional. Users can investigate dates of interest and see how what the top genres are for that day. 
+        This required obtaining the genre data and summarizing songs of the same genre into the same category. Additionally, 
+        we have created three total pages -- an about us page as well as a project detail page that are linked to the home page. 
+        Finally, the shared github repo can be accessed through a link in the top corner. 
+        
+
+        **Possible Next Steps**
+
+        Some further directions we could take with exploratory data analysis include: 1) Increasing the geographic resolution of the top tracks -- 
+        i.e: *How do the top streamed tracks change in different parts of the country?*,
+        2) Enabling the user to change the temporal resolution of the genres vs. streams -- 
+        i.e: *How does the top streamed tracks change over longer periods of time?*, and 3) Implementing a world map graph enabling 
+        users to identify where the most highly streamed genres can be found in the world. 
+
+        This data could also be used to ask predictive questions. For example, it may be possible to predict what the top ten genres 
+        might look like for a particular time period. Additionally, in combination with sound metrics, it may be possible to identify how popular 
+        (how many streams) a song might obtain and thus if it makes it into the top 200 most streamed songs. 
+
+
+
+        **References**
+
+        [1] https://www.riaa.com/wp-content/uploads/2019/02/RIAA-2018-Year-End-Music-Industry-Revenue-Report.pdf
+
+        [2] https://spotifycharts.com/regional
+
+        [3] https://github.com/fbkarsdorp/spotify-chart
+        
+
+
+
+
+
+
+
+
+        
+
+
         ''', className='eleven columns', style={'paddingLeft': '5%'}),
         html.Br(),
         html.Div(id='page-1-content'),
