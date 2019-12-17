@@ -46,7 +46,8 @@ def page_link():
     Returns the page link as a dash html.Div
     """
     return html.Div(children=[
-        html.Div([dcc.Link('Go to About Page', href='/page-1'),])
+        html.Div([dcc.Link('Go to About Page', href='/page-1'),]),
+        html.Div([dcc.Link('Go to Additional Information Page', href='/page-2')])
     ])
 
 def about_page_layout():
@@ -127,6 +128,55 @@ def about_page_layout():
         html.Br(),
         html.Div(id='page-1-content'),
         dcc.Link('Go back to Home', href='/'),
+        html.Br(),
+        dcc.Link('Go to Additional Information', href='/page-2')
+])
+def additional_page_layout():
+    return html.Div([
+        html.H3('Additional Information'),
+        html.Hr(),
+        dcc.Markdown('''
+        # **Spotify Top Tracks**
+         *A project by Amanda Khoo and Zhiyan Wang for Data 1050*
+
+
+        **Development Process and Final Technology Stack**
+
+        We built our project off of the examples given by the teaching staff. Thus, our project uses MongoDB as the database and plot.ly & dash app to create an interactive webpage. Actions on our webpage are also redirected to app.py and the data returned and graphed using plot.ly. 
+
+        The data is acquired as raw and is processed into a pandas DataFrame by the package we’re using called spotify-chart. However, to append the new columns genre and date to this dataframe, we had to request raw data and format it ourselves into a pandas DataFrame. We can then call specific columns of the dataframe for plotting purposes through plot.ly and can interact with those plots using dash.
+
+        **Data Acquisition, Caching, ETL Processing, Database Design**
+
+        The top 200 chart data is first accessed through spotify-chart package and saved into data frame. Genre information is added to the chart by query each song using Spotify API. 
+        A token is acquired through spotify API to allow data read. Every song is queried through spotify API to acquire the artist ID and the coreresponding 
+        genre information. All of the information is then stored in a pandas DataFrame. Furthermore, dataframe is transformed into MongoDB with Date, SongID and Position as the IDs. 
+        Each track is updated if the unique IDs already exists. Otherwise, a new entry will be entered into the database. 
+
+        **Further Information**
+
+        The following links are to ipython notebooks that helped build this website. For better accessibility, right click and open in a new tab. 
+        [ETL_EDA.py](https://drive.google.com/open?id=15gAPkK5B4bbGsUZIQwevjQ67kWNfVQ7O) and [Enhancement.py](https://drive.google.com/open?id=1EIzmbXS8eJe-VwTIJJEj1k_9eqtVKbP4)
+        
+
+        
+
+
+
+
+
+
+
+
+        
+
+
+        ''', className='eleven columns', style={'paddingLeft': '5%'}),
+        html.Br(),
+        html.Div(id='page-2-content'),
+        dcc.Link('Go back to Home', href='/'),
+        html.Br(),
+        dcc.Link('Go to About Page', href='/page-1')
 ])
 
 def description():
@@ -309,7 +359,8 @@ def serve_layout():
     return html.Div([
         url_bar_and_content_div(),
         dynamic_layout(),
-        about_page_layout()
+        about_page_layout(),
+        additional_page_layout(),
     ])
 
 # set layout to a function which updates upon reloading
@@ -392,6 +443,8 @@ def what_if_handler(selected_year):
 def display_page(pathname):
     if pathname == "/page-1":
         return about_page_layout()
+    elif pathname == "/page-2":
+        return additional_page_layout()
     else:
         return dynamic_layout()
 
