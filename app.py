@@ -418,10 +418,12 @@ def what_if_handler(selected_year):
             xaxis={'title': 'genre',
                    'range':[-1,50]},
             yaxis={'title': 'Streams', 'range': [0, 500000]},
-            margin={'l': 50, 'b': 180, 't': 10, 'r': 10},
+            margin={'l': 100, 'b': 180, 't': 10, 'r': 10},
             showlegend = False,
             hovermode='closest',
             transition = {'duration': 500},
+            plot_bgcolor='#23272c', paper_bgcolor='#23272c',
+            font=dict(size=18, color="white")
         )
     }
     # supply = df['Wind'] * wind + df['Hydro'] * hydro + df['Fossil/Biomass'] + df['Nuclear']
