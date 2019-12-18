@@ -149,7 +149,7 @@ def additional_page_layout():
         **Data Acquisition, Caching, ETL Processing, Database Design**
 
         The top 200 chart data is first accessed through spotify-chart package and saved into data frame. Genre information is added to the chart by query each song using Spotify API. 
-        A token is acquired through spotify API to allow data read. Every song is queried through spotify API to acquire the artist ID and the coreresponding 
+        A token is acquired through spotify API to allow data read. Every song is queried through spotify API to acquire the artist ID and the corresponding 
         genre information. All of the information is then stored in a pandas DataFrame. Furthermore, dataframe is transformed into MongoDB with Date, SongID and Position as the IDs. 
         Each track is updated if the unique IDs already exists. Otherwise, a new entry will be entered into the database. 
 
